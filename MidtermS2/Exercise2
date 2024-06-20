@@ -1,0 +1,36 @@
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+
+public class DisplayProducts {
+    public static void main(String[] args) {
+        String jdbcUrl = "jdbc:mysql://localhost:3306/Product";
+        String username = "your username";
+        String password = "your password";
+
+        try {
+            Connection connection = DriverManager.getConnection(jdbcUrl, username, password);
+            System.out.println("Database connected");
+
+            Statement statement = connection.createStatement();
+
+            String sql = "SELECT * FROM Product";
+            ResultSet resultSet = statement.executeQuery(sql);
+
+            System.out.printf("%-4s %-10s %-15s %-15s%n", "id", "name", "price_per_unit", "active_for_sell");
+            while (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                String name = resultSet.getString("name");
+                double pricePerUnit = resultSet.getDouble("price_per_unit");
+                boolean activeForSell = resultSet.getBoolean("active_for_sell");
+
+                System.out.printf("%-4d %-10s %-15.2f %-15b%n", id, name, pricePerUnit, activeForSell);
+            }
+
+            connection.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
