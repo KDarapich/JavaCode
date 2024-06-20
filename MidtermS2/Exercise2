@@ -6,8 +6,8 @@ import java.sql.Statement;
 public class DisplayProducts {
     public static void main(String[] args) {
         String jdbcUrl = "jdbc:mysql://127.0.0.1:3333/?user=root","root","pwd123";
-        String username = "your username";
-        String password = "your password";
+        String username = "username";
+        String password = "password";
 
         try {
             Connection connection = DriverManager.getConnection(jdbcUrl, username, password);
