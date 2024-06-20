@@ -5,7 +5,7 @@ import java.sql.Statement;
 
 public class DisplayProducts {
     public static void main(String[] args) {
-        String jdbcUrl = "jdbc:mysql://localhost:3306/Product";
+        String jdbcUrl = "jdbc:mysql://127.0.0.1:3333/?user=root","root","pwd123";
         String username = "your username";
         String password = "your password";
 
@@ -29,8 +29,6 @@ public class DisplayProducts {
             }
 
             connection.close();
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 }
