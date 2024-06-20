@@ -1,0 +1,74 @@
+import javax.swing.*;
+import java.awt.*;
+
+public class LockerApp extends JFrame {
+    private final JTextField passcodeField;
+    private final JLabel statusLabel;
+    private String savedPassword;
+    private boolean isPasswordSet;
+
+    public LockerApp() {
+        setTitle("Locker");
+        setSize(400, 300);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLayout(new BorderLayout());
+
+        passcodeField = new JTextField(10);
+        JButton enterButton=new JButton("Enter");
+        JButton clearButton=new JButton("Clear");
+        statusLabel = new JLabel("Enter Password");
+        savedPassword = null;
+        isPasswordSet = false;
+
+        JPanel numberPadPanel = new JPanel(new GridLayout(3, 3));
+        for (int i = 1; i <= 9; i++) {
+            addButtonToNumberPad(numberPadPanel, String.valueOf(i));
+        }
+
+        JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
+        bottomPanel.add(clearButton);
+        bottomPanel.add(passcodeField);
+        bottomPanel.add(enterButton);
+        bottomPanel.add(statusLabel);
+
+        add(numberPadPanel, BorderLayout.CENTER);
+        add(bottomPanel, BorderLayout.SOUTH);
+
+        enterButton.addActionListener(e -> handleEnterButtonClick());
+
+        clearButton.addActionListener(e -> handleClearButtonClick());
+    }
+
+    private void addButtonToNumberPad(JPanel panel, String text) {
+        JButton button = new JButton(text);
+        button.addActionListener(e -> passcodeField.setText(passcodeField.getText() + text));
+        panel.add(button);
+    }
+
+    private void handleEnterButtonClick() {
+        String enteredPasscode = passcodeField.getText();
+
+        if (!isPasswordSet) {
+            savedPassword = enteredPasscode;
+            isPasswordSet = true;
+            statusLabel.setText("Password Set");
+        } else {
+            if (enteredPasscode.equals(savedPassword)) {
+                statusLabel.setText("Correct Password");
+            } else {
+                statusLabel.setText("Incorrect Password");
+            }
+        }
+        passcodeField.setText("");
+    }
+
+    private void handleClearButtonClick() {
+        passcodeField.setText("");
+        statusLabel.setText("Enter Password");
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> new LockerApp().setVisible(true));
+    }
+}
+
